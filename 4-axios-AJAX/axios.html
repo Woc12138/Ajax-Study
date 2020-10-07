@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios 发送 AJAX请求</title>
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+</head>
+
+<body>
+  <button>GET</button>
+  <button>POST</button>
+  <button>AJAX</button>
+
+  <script>
+    const btns = document.querySelectorAll('button')
+    // 配置 baseURL
+    axios.defaults.baseURL = 'http://127.0.0.1:8000'
+    btns[0].onclick = () => {
+      /*
+        第一个参数：url
+        第二个参数：其他配置config对象{
+          params：url上加的请求行参数
+          headers：请求头信息
+        }
+        与jQuery不同，jQuery是基于成功/失败回调函数，而axios会返回一个promise对象需要用.then()定义回调函数来处理结果
+      */
+      axios.get('/axios-server', {
+        params: {
+          id: 100,
+          vip: 7
+        },
+        headers: {
+          name: 'wy',
+          age: 18
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    }
+
+    btns[1].onclick = () => {
+      /*
+      post比get多了个请求体
+        第二个参数：请求体对象
+        第三个参数：其他配置config对象
+      */
+      axios.post('/axios-server', {
+        username: 'admin',
+        password: '123'
+      }, {
+        params: {
+          id: 200,
+          vip: 9
+        },
+        headers: {
+          height: 160,
+          weight: 50
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    }
+
+    btns[2].onclick = () => {
+      /*
+        url
+        method：请求方法
+        params：url参数
+        headers：请求头
+        data：请求体
+      */
+      axios({
+        url: '/axios-server',
+        method: 'POST',
+        params: {
+          vip: 10,
+          level: 30
+        },
+        headers: {
+          a: 100,
+          b: 200
+        },
+        data: {
+          username: 'admin',
+          password: '123'
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    }
+  </script>
+</body>
+
+</html>

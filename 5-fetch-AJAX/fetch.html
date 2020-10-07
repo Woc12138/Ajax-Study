@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fetch 发送 AJAX请求</title>
+</head>
+
+<body>
+  <button>AJAX请求</button>
+  <script>
+    //文档地址
+    //https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+
+    const btn = document.querySelector('button');
+
+    btn.onclick = function () {
+      /*
+        第一个参数：url
+        第二个参数：可选，配置对象 {
+          method
+          headers
+          body：请求体
+        }
+      */
+      fetch('http://127.0.0.1:8000/fetch-server?vip=10', {
+        method: 'POST',
+        headers: {
+          name: 'wy'
+        },
+        body: 'username=admin&password=123'
+      }).then(res => {
+        // return res.text() // 有text方法会返回promise包裹的响应体内容
+        return res.json() // json格式被解析为对象
+      }).then(data => {
+        console.log(data)
+      })
+    }
+  </script>
+</body>
+
+</html>
